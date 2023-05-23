@@ -23,7 +23,7 @@ class RegistrationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvHello.setOnClickListener {
+        binding.tvChange.setOnClickListener {
 
             val intent = Intent(requireContext(), MainActivity::class.java)
 

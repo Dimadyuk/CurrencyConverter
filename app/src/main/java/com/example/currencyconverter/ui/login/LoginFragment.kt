@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvHello.setOnClickListener {
+        binding.tvCurrency.setOnClickListener {
 
             val fragment = RegistrationFragment.newInstance()
 
