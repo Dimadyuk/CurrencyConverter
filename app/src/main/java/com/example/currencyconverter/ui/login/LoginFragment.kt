@@ -27,12 +27,13 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvCurrency.setOnClickListener {
+        binding.tvSignUp.setOnClickListener {
 
             val fragment = RegistrationFragment.newInstance()
 
             if (savedInstanceState == null) {
                 parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
                     .replace(R.id.container, fragment)
                     .commit()
             }

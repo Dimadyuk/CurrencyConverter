@@ -17,13 +17,12 @@ class RegistrationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+        arguments?.let {}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvChange.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
 
             val intent = Intent(requireContext(), MainActivity::class.java)
 
@@ -32,8 +31,7 @@ class RegistrationFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,10 +44,8 @@ class RegistrationFragment : Fragment() {
 
     companion object {
 
-        fun newInstance() =
-            RegistrationFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = RegistrationFragment().apply {
+            arguments = Bundle().apply {}
+        }
     }
 }
