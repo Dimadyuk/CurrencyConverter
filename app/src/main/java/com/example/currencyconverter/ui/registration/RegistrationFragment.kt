@@ -1,12 +1,12 @@
 package com.example.currencyconverter.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.currencyconverter.R
+import com.example.currencyconverter.MainActivity
 import com.example.currencyconverter.databinding.FragmentRegistrationBinding
 
 
@@ -24,7 +24,10 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvHello.setOnClickListener {
-            findNavController().navigate(R.id.navigation_home)
+
+            val intent = Intent(requireContext(), MainActivity::class.java)
+
+            startActivity(intent)
         }
     }
 

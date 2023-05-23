@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.currencyconverter.R
 import com.example.currencyconverter.databinding.FragmentLoginBinding
+import com.example.currencyconverter.ui.registration.RegistrationFragment
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -28,7 +28,14 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvHello.setOnClickListener {
-            findNavController().navigate(R.id.navigation_registration)
+
+            val fragment = RegistrationFragment.newInstance()
+
+            if (savedInstanceState == null) {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .commit()
+            }
         }
     }
 
