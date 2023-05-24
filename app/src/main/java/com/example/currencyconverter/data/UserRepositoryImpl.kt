@@ -1,0 +1,12 @@
+package com.example.currencyconverter.data
+
+import android.app.Application
+import com.example.currencyconverter.domain.User
+import com.example.currencyconverter.domain.UserRepository
+
+class UserRepositoryImpl(application: Application) : UserRepository {
+    private val userDao = AppDataBase.getInstance(application).userDao()
+    private val mapper = UserMapper()
+
+    override suspend fun insertUser(user: User) = userDao.insertUser(mapper.mapUserToDb(user))
+}
