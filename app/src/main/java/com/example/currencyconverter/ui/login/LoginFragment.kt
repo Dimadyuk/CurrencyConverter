@@ -1,6 +1,5 @@
 package com.example.currencyconverter.ui.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,9 +21,20 @@ class LoginFragment : Fragment() {
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {}
+    private fun parseArgs() {
+        with(binding) {
+            arguments?.let {
+                it.getString(LOGIN)?.let { login ->
+                    etLogin.setText(login)
+                }
+                it.getString(PASSWORD)?.let { password ->
+                    etPassword.setText(password)
+                }
+                if (!etLogin.text.isNullOrBlank() && !etPassword.text.isNullOrEmpty()) {
+                    viewModel.loginUser(etLogin.text.toString(), etPassword.text.toString())
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -37,14 +47,14 @@ class LoginFragment : Fragment() {
         setClickListeners()
         setChangeListeners()
         observeViewModel()
-
-
+        parseArgs()
     }
+
 
     private fun setClickListeners() {
         with(binding) {
             btnSignIn.setOnClickListener {
-                viewModel.checkUser(etLogin.text.toString(), etPassword.text.toString())
+                viewModel.loginUser(etLogin.text.toString(), etPassword.text.toString())
             }
             tvSignUp.setOnClickListener {
                 val fragment = RegistrationFragment.newInstance()
@@ -94,7 +104,7 @@ class LoginFragment : Fragment() {
             with(binding) {
                 formUserState.incorrectLogin?.let { etLogin.error = getString(it) }
                 formUserState.incorrectPassword?.let { etPassword.error = getString(it) }
-                if (formUserState.user != null){
+                if (formUserState.user != null) {
                     val user = formUserState.user!!
                     val intent = MainActivity.newIntent(requireContext(), user)
                     startActivity(intent)
@@ -104,10 +114,12 @@ class LoginFragment : Fragment() {
     }
 
     companion object {
-
-        fun newInstance() = LoginFragment().apply {
+        private const val LOGIN = "login"
+        private const val PASSWORD = "password"
+        fun newInstance(login: String?, password: String?) = LoginFragment().apply {
             arguments = Bundle().apply {
-
+                putString(LOGIN, login)
+                putString(PASSWORD, password)
             }
         }
     }

@@ -1,14 +1,12 @@
 package com.example.currencyconverter.ui.login
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconverter.R
 import com.example.currencyconverter.data.UserRepositoryImpl
-import com.example.currencyconverter.domain.User
 import com.example.currencyconverter.domain.usecases.CheckLoginUseCase
 import com.example.currencyconverter.domain.usecases.GetUserUseCase
 import kotlinx.coroutines.Dispatchers
@@ -26,24 +24,23 @@ class LoginViewModel(private val application: Application) : AndroidViewModel(ap
     private val _loginUserFormState = MutableLiveData<LoginUserState>()
     val loginUserFormState: LiveData<LoginUserState> = _loginUserFormState
 
-    fun checkUser(login: String, password: String) {
+    fun loginUser(login: String, password: String) {
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
 
             val loginState = LoginUserState()
             if (!isLoginValid(login)) {
                 loginState.incorrectLogin = R.string.no_such_user
             }
-            loginState.user = getUseCase(login, password)
+            withContext(Dispatchers.IO) {
+                loginState.user = getUseCase(login, password)
+            }
+
 
             if (loginState.user == null) {
                 loginState.incorrectPassword = R.string.incorrect_password
             }
-
-
-            withContext(Dispatchers.Main) {
-                _loginUserFormState.value = loginState
-            }
+            _loginUserFormState.value = loginState
         }
     }
 
