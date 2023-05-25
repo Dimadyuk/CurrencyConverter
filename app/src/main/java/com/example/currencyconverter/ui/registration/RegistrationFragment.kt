@@ -33,9 +33,8 @@ class RegistrationFragment : Fragment() {
         setChangeListeners()
 
         binding.btnRegister.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
             registerUser()
-            startActivity(intent)
+            parentFragmentManager.beginTransaction().remove(this).commit()
         }
     }
 

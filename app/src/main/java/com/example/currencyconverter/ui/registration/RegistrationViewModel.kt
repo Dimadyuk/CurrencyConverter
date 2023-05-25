@@ -27,8 +27,11 @@ class RegistrationViewModel(private val application: Application) : AndroidViewM
             val result = registerUseCase.invoke(newUser)
             withContext(Dispatchers.Main) {
                 if (result > 0) {
-                    Toast.makeText(application, "$newUser added in database!", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        application,
+                        "Thanks  for registration, ${newUser.name}!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -36,19 +39,15 @@ class RegistrationViewModel(private val application: Application) : AndroidViewM
 
     fun registerDataChanged(login: String, password: String, name: String, surname: String) {
         val state = RegistrationState()
-
         if (!isTextValid(login)) {
             state.loginError = R.string.invalid_login
         }
-
         if (!isTextValid(password)) {
             state.passwordError = R.string.invalid_password
         }
-
         if (!isTextValid(name)) {
             state.nameError = R.string.invalid_name
         }
-
         if (!isTextValid(surname)) {
             state.surnameError = R.string.invalid_surname
         }

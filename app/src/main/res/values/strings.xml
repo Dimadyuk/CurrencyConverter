@@ -21,4 +21,6 @@
     <string name="invalid_surname">Surname must be >3 characters</string>
     <string name="enter_your_name">Enter your name</string>
     <string name="enter_your_surname">Enter your surname</string>
+    <string name="no_such_user">Такой пользователь отсутствует</string>
+    <string name="incorrect_password">Неверный пароль</string>
 </resources>

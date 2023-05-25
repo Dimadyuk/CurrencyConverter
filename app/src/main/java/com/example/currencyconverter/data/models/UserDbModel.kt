@@ -3,7 +3,7 @@ package com.example.currencyconverter.data.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "user_info")
 data class UserDbModel(
     @PrimaryKey val login: String,
     val password: String,

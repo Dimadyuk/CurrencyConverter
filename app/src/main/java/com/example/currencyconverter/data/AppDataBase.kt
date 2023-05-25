@@ -8,7 +8,7 @@ import com.example.currencyconverter.data.models.UserDbModel
 
 @Database(
     entities = [UserDbModel::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
