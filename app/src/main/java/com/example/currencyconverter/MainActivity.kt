@@ -13,7 +13,7 @@ import com.example.currencyconverter.ui.DialogLogOutFragment
 import com.example.currencyconverter.ui.SharedPreferencesKeys
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DialogLogOutFragment.DialogListener {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel by lazy {
@@ -45,33 +45,44 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        binding.btnLogout.setOnClickListener {
-            val dialogFragment = DialogLogOutFragment()
-            dialogFragment.show(supportFragmentManager, "dialog")
-        }
         val dialogFragment =
             supportFragmentManager.findFragmentByTag("dialog") as? DialogLogOutFragment
+                ?: DialogLogOutFragment().apply {
+                    setDialogListener(this@MainActivity)
+                }
 
+        binding.btnLogout.setOnClickListener {
+            dialogFragment.show(supportFragmentManager, "dialog")
+        }
     }
 
     private fun observeViewModel() {
         viewModel.user.observe(this) {
-            binding.tvUserName.text = "${it.name} ${it.surname}"
+            binding.tvUserName.text = "${it?.name} ${it?.surname}"
         }
     }
 
     override fun onStop() {
         super.onStop()
+
         val login = viewModel.user.value?.login
         val password = viewModel.user.value?.password
+        val sharedPreferences = getSharedPreferences(
+            SharedPreferencesKeys.SHARED_PREF, Context.MODE_PRIVATE
+        )
+        sharedPreferences.edit().apply {
+            putString(SharedPreferencesKeys.LOGIN, login)
+            putString(SharedPreferencesKeys.PASSWORD, password)
+            apply()
+        }
+    }
 
-        getSharedPreferences(SharedPreferencesKeys.SHARED_PREF, Context.MODE_PRIVATE)
-            .edit()
-            .apply {
-                putString(SharedPreferencesKeys.LOGIN, login)
-                putString(SharedPreferencesKeys.PASSWORD, password)
-            }.apply()
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
 
+    private fun cleanUser() {
+        viewModel.setUser(null)
     }
 
     companion object {
@@ -82,5 +93,10 @@ class MainActivity : AppCompatActivity() {
             }
             return intent
         }
+    }
+
+    override fun onDialogPositiveClick() {
+        finish()
+        cleanUser()
     }
 }

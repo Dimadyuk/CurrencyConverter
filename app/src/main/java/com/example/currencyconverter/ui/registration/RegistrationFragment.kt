@@ -34,7 +34,8 @@ class RegistrationFragment : Fragment() {
 
         binding.btnRegister.setOnClickListener {
             registerUser()
-            parentFragmentManager.beginTransaction().remove(this).commit()
+            parentFragmentManager.popBackStack()
+
         }
     }
 

@@ -58,7 +58,8 @@ class LoginFragment : Fragment() {
             }
             tvSignUp.setOnClickListener {
                 val fragment = RegistrationFragment.newInstance()
-                parentFragmentManager.beginTransaction().addToBackStack(null)
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
                     .replace(R.id.container, fragment).commit()
             }
 
